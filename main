@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=8,walltime=1:00:00
+#PBS -N hcp-cortex-mapping-replication
+#PBS -l vmem=16gb
+#PBS -V
+
+if [ ! -f snr.nii.gz ]; then
+	time singularity exec -e docker:/brainlife/fsl:5.0.9 ./snr.sh
+fi
+
+time singularity exec -e docker://brainlife/connectome_workbench:1.4.2-freesurfer-update ./cortex-maping.sh
+
+
