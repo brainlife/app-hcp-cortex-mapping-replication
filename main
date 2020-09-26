@@ -8,6 +8,6 @@ if [ ! -f snr.nii.gz ]; then
 	time singularity exec -e docker://brainlife/fsl:5.0.9 ./snr.sh
 fi
 
-time singularity exec -e docker://brainlife/connectome_workbench:1.4.2b cortex-maping.sh
+time singularity exec -e docker://brainlife/connectome_workbench:1.4.2b ./cortex-maping.sh
 
 
