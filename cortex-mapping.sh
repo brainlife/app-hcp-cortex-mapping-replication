@@ -13,9 +13,9 @@ fa=`jq -r '.fa' config.json`;
 ad=`jq -r '.ad' config.json`;
 md=`jq -r '.md' config.json`;
 rd=`jq -r '.rd' config.json`;
-icvf=`jq -r '.icvf' config.json`;
+ndi=`jq -r '.ndi' config.json`;
 isovf=`jq -r '.isovf' config.json`;
-od=`jq -r '.od' config.json`;
+odi=`jq -r '.odi' config.json`;
 anat=`jq -r '.anat' config.json`;
 
 # set paths and variables
@@ -29,7 +29,7 @@ AtlasSpaceFolder="${postfreesurfer}/MNINonLinear"
 AtlasSpaceNativeFolder="${AtlasSpaceFolder}/Native"
 AtlasSpaceROIFolder="${AtlasSpaceFolder}/ROIs"
 AtlasSpaceXfmsFolder="${AtlasSpaceFolder}/xfms"
-METRIC="ad fa md rd icvf isovf od"
+METRIC="ad fa md rd ndi isovf odi"
 HEMI="lh rh"
 
 # make directories
