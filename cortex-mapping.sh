@@ -48,7 +48,7 @@ cp -v ${AtlasSpaceFolder}/ribbon.nii.gz ./cortexmap/surf/
 # copy over files for visualization and future stats
 for hemi in ${HEMI}
 do
-	if [[ ${HEMI} == "lh" ]]; then
+	if [[ ${hemi} == "lh" ]]; then
 		CARET_HEMI="L"
 	else
 		CARET_HEMI="R"
