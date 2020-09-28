@@ -4,8 +4,11 @@
 #PBS -l vmem=16gb
 #PBS -V
 
+[ -z "$FREESURFER_LICENSE" ] && echo "Please set FREESURFER_LICENSE in .bashrc" && exit 1;
+echo $FREESURFER_LICENSE > license.txt
+
 if [ ! -f snr.nii.gz ]; then
 	time singularity exec -e docker://brainlife/fsl:5.0.9 ./compute-snr.sh
 fi
 
-time singularity exec -e docker://brainlife/connectome_workbench:1.4.2b ./cortex-mapping.sh
+time singularity exec -e -B `pwd`/license.txt:/usr/local/freesurfer/license.txt docker://brainlife/connectome_workbench:1.4.2b ./cortex-mapping.sh

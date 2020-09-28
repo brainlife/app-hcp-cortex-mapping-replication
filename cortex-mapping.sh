@@ -55,22 +55,22 @@ do
 	fi
 
 	# aparc a2009s
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/label/${HEMI}.aparc.a2009s.native.label.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/label/${hemi}.aparc.a2009s.native.label.gii
 
 	# pial
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/surf/${HEMI}.pial.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/surf/${hemi}.pial.surf.gii
 
 	# white
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.white.native.surf.gii ./cortexmap/surf/${HEMI}.white.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.white.native.surf.gii ./cortexmap/surf/${hemi}.white.surf.gii
 
 	# midthickness
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.midthickness.native.surf.gii ./cortexmap/surf/${HEMI}.midthickness.native.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.midthickness.native.surf.gii ./cortexmap/surf/${hemi}.midthickness.native.surf.gii
 
 	# midthickness inflated
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.very_inflated.native.surf.gii ./cortexmap/surf/${HEMI}.midthickness.very_inflated.native.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.very_inflated.native.surf.gii ./cortexmap/surf/${hemi}.midthickness.very_inflated.native.surf.gii
 
 	# roi
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.surf.gii ./cortexmap/surf/${HEMI}.roi.shape.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.surf.gii ./cortexmap/surf/${hemi}.roi.shape.gii
 done
 
 # generate volume measures mapped to surface
