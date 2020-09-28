@@ -76,6 +76,12 @@ done
 # generate volume measures mapped to surface
 for hemi in ${HEMI}
 do
+	if [[ ${hemi} == 'lh' ]]; then
+		STRUCTURE="CORTEX_LEFT"
+	else
+		STRUCTURE="CORTEX_RIGHT"
+	fi
+
     # volume-specific operations
     volume_name="volume.shape.gii"
     outdir="./cortexmap/surf"
