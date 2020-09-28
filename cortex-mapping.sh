@@ -130,7 +130,7 @@ cp ${AtlasSpaceROIFolder}/Atlas_ROIs.2.nii.gz ./
 
 # map odi to kappa
 wb_command -volume-math 'max(1/tan((od*PI)/2),0)' ./metric/noddi_kappa.nii.gz -var od ${odi} 1>/dev/null
-METRIC="ad fa md rd ndi isovf noddi_kappa"
+METRIC="ad fa md rd ndi isovf odi noddi_kappa"
 
 # SNR surface mapping
 wb_command -volume-warpfield-resample snr.nii.gz \
@@ -298,11 +298,11 @@ wb_command -cifti-math 'max(2*atan(1/kappa)/PI,0)' noddi_odi.MSMAll.32k_fs_LR.ds
 	-var kappa noddi_kappa.MSMAll.32k_fs_LR.dscalar.nii
 
 wb_command -set-map-names noddi_odi.MSMAll.32k_fs_LR.dscalar.nii \
-                -map 1 "od"
+                -map 1 "odi"
 
 wb_command -cifti-palette noddi_odi.MSMAll.32k_fs_LR.dscalar.nii \
                 MODE_AUTO_SCALE_PERCENTAGE \
-                ${vol}.MSMAll.32k_fs_LR.dscalar.nii \
+                noddi_odi.MSMAll.32k_fs_LR.dscalar.nii \
                 -pos-percent 4 96 \
                 -interpolate true \
                 -palette-name videen_style \
