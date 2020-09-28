@@ -36,7 +36,7 @@ HEMI="lh rh"
 mkdir -p cortexmap ./cortexmap/func/ ./cortexmap/func/fsaverage_LR32k ./cortexmap/label ./cortexmap/surf/ ./cortexmap/vol/ metric raw
 
 # copy metrics
-met="${ad} ${fa} ${md} ${rd} ${isovf} ${od} ${icvf}"
+met="${ad} ${fa} ${md} ${rd} ${isovf} ${odi} ${ndi}"
 for MET in ${met}
 do
 	cp ${MET} ./metric/
@@ -123,8 +123,8 @@ cp ${AtlasSpaceFolder}/T1w_restore.2.nii.gz ./
 cp ${AtlasSpaceROIFolder}/Atlas_ROIs.2.nii.gz ./
 
 # map odi to kappa
-wb_command -volume-math 'max(1/tan((od*PI)/2),0)' ./metric/noddi_kappa.nii.gz -var od ${od} 1>/dev/null
-METRIC="ad fa md rd icvf isovf noddi_kappa"
+wb_command -volume-math 'max(1/tan((od*PI)/2),0)' ./metric/noddi_kappa.nii.gz -var od ${odi} 1>/dev/null
+METRIC="ad fa md rd ndi isovf noddi_kappa"
 
 # SNR surface mapping
 wb_command -volume-warpfield-resample snr.nii.gz \
