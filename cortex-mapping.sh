@@ -70,7 +70,7 @@ do
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.very_inflated.native.surf.gii ./cortexmap/surf/${hemi}.midthickness.very_inflated.native.surf.gii
 
 	# roi
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.surf.gii ./cortexmap/surf/${hemi}.roi.shape.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.shape.gii ./cortexmap/surf/${hemi}.roi.shape.gii
 done
 
 # generate volume measures mapped to surface
