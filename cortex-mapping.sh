@@ -33,7 +33,7 @@ METRIC="ad fa md rd ndi isovf odi"
 HEMI="lh rh"
 
 # make directories
-mkdir -p cortexmap ./cortexmap/func/ ./cortexmap/func/fsaverage_LR32k ./cortexmap/label ./cortexmap/surf/ ./cortexmap/vol/ metric raw
+mkdir -p cortexmap ./cortexmap/cortexmap ./cortexmap/cortexmap/func/ ./cortexmap/cortexmap/func/fsaverage_LR32k ./cortexmap/cortexmap/label ./cortexmap/cortexmap/surf/ ./cortexmap/cortexmap/vol/ metric raw
 
 # copy metrics
 met="${ad} ${fa} ${md} ${rd} ${isovf} ${odi} ${ndi}"
@@ -43,7 +43,7 @@ do
 done
 
 # copy over ribbon for vizualiation
-cp -v ${AtlasSpaceFolder}/ribbon.nii.gz ./cortexmap/surf/
+cp -v ${AtlasSpaceFolder}/ribbon.nii.gz ./cortexmap/cortexmap/surf/
 
 # copy over files for visualization and future stats
 for hemi in ${HEMI}
@@ -55,22 +55,22 @@ do
 	fi
 
 	# aparc a2009s
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/label/${hemi}.aparc.a2009s.native.label.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/cortexmap/label/${hemi}.aparc.a2009s.native.label.gii
 
 	# pial
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/surf/${hemi}.pial.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.pial.surf.gii
 
 	# white
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.white.native.surf.gii ./cortexmap/surf/${hemi}.white.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.white.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.white.surf.gii
 
 	# midthickness
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.midthickness.native.surf.gii ./cortexmap/surf/${hemi}.midthickness.native.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.midthickness.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.midthickness.native.surf.gii
 
 	# midthickness inflated
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.very_inflated.native.surf.gii ./cortexmap/surf/${hemi}.midthickness.very_inflated.native.surf.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.very_inflated.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.midthickness.very_inflated.native.surf.gii
 
 	# roi
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.shape.gii ./cortexmap/surf/${hemi}.roi.shape.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.roi.native.shape.gii ./cortexmap/cortexmap/surf/${hemi}.roi.shape.gii
 done
 
 # generate volume measures mapped to surface
@@ -84,7 +84,7 @@ do
 
     # volume-specific operations
     volume_name="volume.shape.gii"
-    outdir="./cortexmap/surf"
+    outdir="./cortexmap/cortexmap/surf"
     if [ ! -f ${outdir}/${hemi}.${volume_name} ]; then
     	mris_convert -c ${freesurfer}/surf/${hemi}.volume \
     		${freesurfer}/surf/${hemi}.white \
@@ -149,20 +149,20 @@ do
 	# map snr
 	wb_command -volume-to-surface-mapping snr_T1.nii.gz \
 		${AtlasSpaceNativeFolder}/*.${caretHemi}.midthickness.native.surf.gii \
-		./cortexmap/func/${hemi}.snr.func.gii \
+		./cortexmap/cortexmap/func/${hemi}.snr.func.gii \
 		-myelin-style ribbon_${hemi}.nii.gz \
 		${AtlasSpaceNativeFolder}/*.${caretHemi}.thickness.native.shape.gii \
 		"$MappingSigma"
 	
 	# mask out non cortex
-	wb_command -metric-mask ./cortexmap/func/${hemi}.snr.func.gii \
+	wb_command -metric-mask ./cortexmap/cortexmap/func/${hemi}.snr.func.gii \
 		${AtlasSpaceNativeFolder}/*.${caretHemi}.roi.native.shape.gii \
-		./cortexmap/func/${hemi}.snr.func.gii
+		./cortexmap/cortexmap/func/${hemi}.snr.func.gii
 
 	# find "good" vertices (snr > 10)
-	wb_command -metric-math 'x>10' ./cortexmap/func/${hemi}.goodvertex.func.gii \
+	wb_command -metric-math 'x>10' ./cortexmap/cortexmap/func/${hemi}.goodvertex.func.gii \
 		-var x \
-		./cortexmap/func/${hemi}.snr.func.gii
+		./cortexmap/cortexmap/func/${hemi}.snr.func.gii
 done
 
 # metric surface mapping
@@ -185,33 +185,33 @@ do
 		# map volumes to surface
 		wb_command -volume-to-surface-mapping ${vol}.nii.gz \
 	                ${AtlasSpaceNativeFolder}/*.${caretHemi}.midthickness.native.surf.gii \
-        	        ./cortexmap/func/${hemi}.${vol}.func.gii \
+        	        ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
                 	-myelin-style ribbon_${hemi}.nii.gz \
                 	${AtlasSpaceNativeFolder}/*.${caretHemi}.thickness.native.shape.gii \
                 	"$MappingSigma"
 		
 		# mask surfaces by good vertices
-		wb_command -metric-mask ./cortexmap/func/${hemi}.${vol}.func.gii \
-			./cortexmap/func/${hemi}.goodvertex.func.gii \
-			./cortexmap/func/${hemi}.${vol}.func.gii
+		wb_command -metric-mask ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
+			./cortexmap/cortexmap/func/${hemi}.goodvertex.func.gii \
+			./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii
 		
 		# dilate surface
-		wb_command -metric-dilate ./cortexmap/func/${hemi}.${vol}.func.gii \
+		wb_command -metric-dilate ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			${AtlasSpaceNativeFolder}/*.${caretHemi}.midthickness.native.surf.gii \
 			20 \
-			./cortexmap/func/${hemi}.${vol}.func.gii \
+			./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			-nearest
 		
 		# mask surface by roi.native.shape
-		wb_command -metric-mask ./cortexmap/func/${hemi}.${vol}.func.gii \
+		wb_command -metric-mask ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			${AtlasSpaceNativeFolder}/*.${caretHemi}.roi.native.shape.gii \
-			 ./cortexmap/func/${hemi}.${vol}.func.gii
+			 ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii
 
-		wb_command -set-map-name ./cortexmap/func/${hemi}.${vol}.func.gii \
+		wb_command -set-map-name ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			1 \
 			"$caretHemi"_"$vol"
 
-		wb_command -metric-palette ./cortexmap/func/${hemi}.${vol}.func.gii \
+		wb_command -metric-palette ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			MODE_AUTO_SCALE_PERCENTAGE \
 			-pos-percent 4 96 \
 			-interpolate true \
@@ -235,25 +235,25 @@ do
 
 		DownsampleFolder=${AtlasSpaceFolder}/fsaverage_LR32k
 
-		wb_command -metric-resample ./cortexmap/func/${hemi}.${vol}.func.gii \
+		wb_command -metric-resample ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			${AtlasSpaceNativeFolder}/*.${caretHemi}.sphere.MSMAll.native.surf.gii \
 			${DownsampleFolder}/*.${caretHemi}.sphere.32k_fs_LR.surf.gii \
 			ADAP_BARY_AREA \
-			./cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
+			./cortexmap/cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
 			-area-surfs \
 			${AtlasSpaceNativeFolder}/*.${caretHemi}.midthickness.native.surf.gii \
 			${DownsampleFolder}/*.${caretHemi}.midthickness.32k_fs_LR.surf.gii \
 			-current-roi \
 			${AtlasSpaceNativeFolder}/*.${caretHemi}.roi.native.shape.gii
 
-		wb_command -metric-mask ./cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
+		wb_command -metric-mask ./cortexmap/cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
 			${DownsampleFolder}/*.${caretHemi}.atlasroi.32k_fs_LR.shape.gii \
-			./cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii
+			./cortexmap/cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii
 
 		wb_command -metric-smoothing ${DownsampleFolder}/*.${caretHemi}.midthickness.32k_fs_LR.surf.gii \
-			./cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
+			./cortexmap/cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll.32k_fs_LR.func.gii \
 			"${SmoothingSigma}" \
-			./cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
+			./cortexmap/cortexmap/func/fsaverage_LR32k/${hemi}.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
 			-roi \
 			${DownsampleFolder}/*.${caretHemi}.atlasroi.32k_fs_LR.shape.gii
 	done
@@ -275,9 +275,9 @@ do
 	wb_command -cifti-create-dense-scalar ${vol}.MSMAll.32k_fs_LR.dscalar.nii \
 		-volume ${vol}_AtlasSubcortical_smooth.nii.gz \
 		Atlas_ROIs.2.nii.gz \
-		-left-metric ./cortexmap/func/fsaverage_LR32k/lh.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
+		-left-metric ./cortexmap/cortexmap/func/fsaverage_LR32k/lh.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
 		-roi-left ${DownsampleFolder}/*.L.atlasroi.32k_fs_LR.shape.gii \
-		-right-metric ./cortexmap/func/fsaverage_LR32k/rh.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
+		-right-metric ./cortexmap/cortexmap/func/fsaverage_LR32k/rh.${vol}.MSMAll_smooth.32k_fs_LR.func.gii \
 		-roi-right ${DownsampleFolder}/*.R.atlasroi.32k_fs_LR.shape.gii
 
 	wb_command -set-map-names ${vol}.MSMAll.32k_fs_LR.dscalar.nii \
@@ -321,16 +321,16 @@ do
                         caretHemi="R"
                 fi
 
-		rm -rf ./cortexmap/func/fsaverage_LR32k/${caretHemi}.${vol}MSMAll.32k_fs_LR.func.gii
-		rm -rf ./cortexmap/func/fsaverage_LR32k/${caretHemi}.${vol}MSMAll_smooth.32k_fs_LR.func.gii
+		rm -rf ./cortexmap/cortexmap/func/fsaverage_LR32k/${caretHemi}.${vol}MSMAll.32k_fs_LR.func.gii
+		rm -rf ./cortexmap/cortexmap/func/fsaverage_LR32k/${caretHemi}.${vol}MSMAll_smooth.32k_fs_LR.func.gii
 	done
 done
 
 # clean up
-if [ -f ./cortexmap/func/lh.isovf.func.gii ]; then
-	mv *.dscalar* ./cortexmap/vol/
+if [ -f ./cortexmap/cortexmap/func/lh.isovf.func.gii ]; then
+	mv *.dscalar* ./cortexmap/cortexmap/vol/
 	mv *.nii* ./raw/
-	rm -rf cortexmap/func/fsaverage_LR32k
+	rm -rf cortexmap/cortexmap/func/fsaverage_LR32k
 	echo "complete"
 	exit 0
 else
