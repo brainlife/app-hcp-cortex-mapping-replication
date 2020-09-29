@@ -56,6 +56,7 @@ do
 
 	# aparc a2009s
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/cortexmap/label/${hemi}.aparc.a2009s.native.label.gii
+	wb_command -set-map-names -map 1 "${hemi}_aparc.a2009s"
 
 	# pial
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.pial.surf.gii
@@ -178,9 +179,9 @@ do
 	do
 		if [[ $hemi == "lh" ]]; then
 			caretHemi="L"
-        	else
-                	caretHemi="R"
-        	fi
+    	else
+        	caretHemi="R"
+    	fi
 		
 		# map volumes to surface
 		wb_command -volume-to-surface-mapping ${vol}.nii.gz \
@@ -209,7 +210,7 @@ do
 
 		wb_command -set-map-name ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			1 \
-			"$caretHemi"_"$vol"
+			"$hemi"_"$vol"
 
 		wb_command -metric-palette ./cortexmap/cortexmap/func/${hemi}.${vol}.func.gii \
 			MODE_AUTO_SCALE_PERCENTAGE \
