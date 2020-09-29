@@ -67,7 +67,7 @@ do
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.white.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.white.surf.gii
 
 	# midthickness
-	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.thickness.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.thickness.shape.gii
+	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.thickness.native.shape.gii ./cortexmap/cortexmap/surf/${hemi}.thickness.shape.gii
 
 	# midthickness
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.midthickness.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.midthickness.native.surf.gii
