@@ -56,7 +56,8 @@ do
 
 	# aparc a2009s
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.aparc.a2009s.native.label.gii ./cortexmap/cortexmap/label/${hemi}.aparc.a2009s.native.label.gii
-	wb_command -set-map-names -map 1 "${hemi}_aparc.a2009s"
+	wb_command ./cortexmap/cortexmap/label/${hemi}.aparc.a2009s.native.label.gii \
+			-set-map-names -map 1 "${hemi}_aparc.a2009s"
 
 	# pial
 	cp -v ${AtlasSpaceNativeFolder}/*.${CARET_HEMI}.pial.native.surf.gii ./cortexmap/cortexmap/surf/${hemi}.pial.surf.gii
