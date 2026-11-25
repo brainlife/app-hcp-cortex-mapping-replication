@@ -10,7 +10,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -20,14 +20,14 @@ Ports the RIKEN NoddiSurfaceMapping code: warps the tensor and NODDI maps (plus 
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/dwi` · `neuro/freesurfer` · `neuro/hcp/freesurferpost` · `neuro/tensor` · `neuro/noddi` · `neuro/anat/t1w` · `neuro/mask` |
-| 📤 **Outputs** | `neuro/cortexmap` · `raw` |
-| 🐳 **Container** | `brainlife/fsl:5.0.9` |
-| ⚙️ **Resources** | 8 CPUs · 16 GB memory · 1 h walltime |
-| 🔑 **Requires** | `FREESURFER_LICENSE` |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.430](https://doi.org/10.25663/brainlife.app.430) |
+| **Inputs** | `neuro/dwi` · `neuro/freesurfer` · `neuro/hcp/freesurferpost` · `neuro/tensor` · `neuro/noddi` · `neuro/anat/t1w` · `neuro/mask` |
+| **Outputs** | `neuro/cortexmap` · `raw` |
+| **Container** | `brainlife/fsl:5.0.9` |
+| **Resources** | 8 CPUs · 16 GB memory · 1 h walltime |
+| **Requires** | `FREESURFER_LICENSE` |
+| **Run it** | [doi.org/10.25663/brainlife.app.430](https://doi.org/10.25663/brainlife.app.430) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
@@ -39,7 +39,7 @@ Ports the RIKEN NoddiSurfaceMapping code: warps the tensor and NODDI maps (plus 
 | `anat` | `neuro/anat/t1w` | yes | T1-weighted image passed as the -fnirt source to wb_command -volume-warpfield-resample when warping measures to MNI. |
 | `brainmask` | `neuro/mask` | yes | dwi brainmask |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
@@ -48,7 +48,7 @@ Ports the RIKEN NoddiSurfaceMapping code: warps the tensor and NODDI maps (plus 
 
 <!-- brainlife-app:end -->
 
-## 🏷️ Versions on brainlife.io
+## Versions on brainlife.io
 
 Each version is a separate App on brainlife.io, built from its own branch of this repository.
 
@@ -57,15 +57,15 @@ Each version is a separate App on brainlife.io, built from its own branch of thi
 | Cortex Tissue Mapping - Fukutomi et al 2018 Replication | 1.4.2b | [`v1.0`](https://github.com/brainlife/app-hcp-cortex-mapping-replication/tree/v1.0) | [doi:10.25663/brainlife.app.430](https://doi.org/10.25663/brainlife.app.430) | current |
 | Cortex Tissue Mapping - Fukutomi et al 2018 Replication - DEPRECATED (takes `neuro/noddi-deprecated`) | 1.4.2b | [`master`](https://github.com/brainlife/app-hcp-cortex-mapping-replication/tree/master) | [doi:10.25663/brainlife.app.293](https://doi.org/10.25663/brainlife.app.293) | deprecated |
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App at [doi.org/10.25663/brainlife.app.430](https://doi.org/10.25663/brainlife.app.430), choose the subject's `neuro/dwi`, `neuro/freesurfer`, HCP PostFreeSurfer output (`neuro/hcp/freesurferpost`), `neuro/tensor`, `neuro/noddi`, T1-weighted image and DWI brain mask, and press **Execute**. The App archives a `neuro/cortexmap` dataset and a `raw` dataset of intermediate derivatives.
 
 This App is a port of the [NODDI cortex-mapping code](https://github.com/RIKEN-BCIL/NoddiSurfaceMapping) developed by Fukutomi et al.; the methods are described in their [2018 NeuroImage paper](https://www.sciencedirect.com/science/article/pii/S1053811918301058). It needs HCP-style PostFreeSurfer outputs (`MNINonLinear` with `Native`, `ROIs`, `xfms` and `fsaverage_LR32k` folders and MSMAll native spheres). The DWI must contain several b0 volumes, which are used for the SNR mask.
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/), [`jq`](https://jqlang.github.io/jq/) and a [FreeSurfer license](https://surfer.nmr.mgh.harvard.edu/registration.html). The App runs FSL from `brainlife/fsl:5.0.9` and Connectome Workbench from `brainlife/connectome_workbench:1.4.2b`.
 
@@ -99,7 +99,7 @@ You need [Singularity/Apptainer](https://apptainer.org/), [`jq`](https://jqlang.
    ./main
    ```
 
-### 🧪 Sample data
+### Sample data
 
 Download sample datasets from brainlife.io with the [brainlife CLI](https://github.com/brainlife/cli):
 
@@ -110,7 +110,7 @@ mkdir input
 bl dataset download <dataset-id>
 ```
 
-## 📦 Outputs
+## Outputs
 
 The App computes a brain-masked b0 temporal SNR map, warps it and each measure (ad, fa, md, rd, ndi, isovf, odi and a NODDI kappa derived from odi) to MNI space with the HCP `acpc_dc2standard` warp, maps them onto the native midthickness surface with thickness-weighted ribbon mapping, masks vertices with SNR ≤ 10, and resamples them to the 32k fs_LR mesh with the MSMAll spheres.
 
@@ -123,11 +123,11 @@ cortexmap/cortexmap/
 raw/         intermediate volumes (SNR images, warped measures, subcortical maps)
 ```
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **`failed`**: the native surface maps were not written. Check that the PostFreeSurfer output contains the `MNINonLinear/Native` surfaces and MSMAll spheres, the `fsaverage_LR32k` folder and `xfms/acpc_dc2standard.nii.gz`, and that `FREESURFER_LICENSE` is set.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -141,13 +141,13 @@ raw/         intermediate volumes (SNR images, warped measures, subcortical maps
 - Zhang et al. NODDI: Practical in vivo neurite orientation dispersion and density imaging of the human brain. *NeuroImage* 61:1000-1016 (2012). [doi:10.1016/j.neuroimage.2012.03.072](https://doi.org/10.1016/j.neuroimage.2012.03.072)
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 
-## 👥 Authors
+## Authors
 
 - Brad Caron
 
 **Contributors:** Soichi Hayashi
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -166,6 +166,6 @@ raw/         intermediate volumes (SNR images, warped measures, subcortical maps
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 MIT, Copyright (c) 2020 brainlife.io, The University of Texas at Austin and Indiana University. FSL and Connectome Workbench are distributed under their own licenses.
